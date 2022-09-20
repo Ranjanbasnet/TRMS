@@ -1,0 +1,60 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">  
+  <table class="table-sm table table-striped">
+  <tr>      
+  <td class="text-left"><a href='{{url_for("gotodash")}}' class='btn btn-primary'>Go Back</a></td>
+    <td class="text-right">
+      <a href='{{url_for("logout")}}' class='btn btn-danger'>{{ username }} logout</a>
+  </td>
+</tr>
+</table>
+
+</div>
+<div class="container">  
+   {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category,message in messages %}
+            <div class='alert alert-{{category}}'>{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+        
+</div>
+<div class="container">
+<div class="row">
+  <div class="col-sm">
+    <h2 class="text text-primary">Personal  Details</h2>  
+  {% for s in sdata %}
+  <ul>
+    <li>Name: {{s.title}} {{s.first_name}} {{s.last_name}}</li>
+    <li>Address: {{s.address}}</li>
+    <li>Contact: Email{{s.email}} Phone: {{s.phone}} </li>
+<li><a href="/edit_mdetails/{{s.staff_id}}">Edit</a></li>
+  </ul>
+  {% endfor %}
+</div>
+<div class="col-sm">
+  <h2 class="text text-primary">Qualification Details</h2>  
+      {% for sa in sadata %}
+    <ul>
+      <li> <h4>Aqf level</h4>  {{sa[1].levels}}</li>
+    </ul>
+      {% endfor %}
+    </ul>
+    <h2 class="text text-primary">update new details</h5>
+      <form action="/qdetails" method="post">
+        <select class="form-control" name="aqf_id" id="aqf_id">
+          {% for a in adata %}    
+          <option value={{a.aqf_id}}>{{a.levels}}</option>    
+          {% endfor %}    
+      </select>          
+          <input class="btn btn-primary" type="submit" value="Update Data">
+      </form>    
+</div>
+</div>
+
+</div>
+  
+{% endblock %}

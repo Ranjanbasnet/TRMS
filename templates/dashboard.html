@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <table class="table-sm table table-striped">
+    <tr>
+      <td class="text-left text-info"><h5>{{ session['uname'] }} Logged in as {{ session['role'] }}  </h5></td> 
+    <td class="text-right">
+      <a href='{{url_for("logout")}}' class='btn btn-danger'>Logout</a>
+  </td>
+</tr>
+</table>
+<table class="table-sm table table-striped text-center">
+  <tr>
+<td><a href='{{url_for("mdetails")}}' class='btn btn-info btn-lg'>View My Details</a></td>
+<td><a href='{{url_for("capply")}}' class='btn btn-info btn-lg'>Apply for Courses</a></td>
+</tr>
+{% if session['role']=='Admin' %}
+<tr>
+<td><a href='{{url_for("cdetails")}}' class='btn btn-info btn-lg'>View Available Courses</a></td>  
+<td><a href='{{url_for("sdetails")}}' class='btn btn-info btn-lg'>View Available Semesters</a></td>  
+</tr>
+<tr>
+  <td><a href='{{url_for("calloc")}}' class='btn btn-info btn-lg'>Course Allocation</a></td>  
+  <td><a href='{{url_for("reqman")}}' class='btn btn-info btn-lg'>Request Management</a></td>  
+  </tr>
+{% endif %}
+  </table>  
+
+{% endblock %}
+
