@@ -33,7 +33,7 @@ db = SQLAlchemy(app)
 
 def populate_db():          
     titlelist = [Title(title="Mr"),Title(title="Mrs"),Title(title="Miss")]
-    db.session.bulk_save_objects(titlelist)
+    db.session.bulk_save_objects(titlelist)    
     aqflist = [Aqf_Levels(levels="Level-01"),Aqf_Levels(levels="Level-02"),Aqf_Levels(levels="Level-03"),Aqf_Levels(levels="Level-04"),Aqf_Levels(levels="Diploma"),Aqf_Levels(levels="Advanced Diploma"),Aqf_Levels(levels="Bachelor Degree"),Aqf_Levels(levels="Graduate Diploma"),Aqf_Levels(levels="Master Degree"),Aqf_Levels(levels="Doctorate")]
     db.session.bulk_save_objects(aqflist)
     semlist=[
@@ -83,6 +83,9 @@ def populate_db():
     Courses(course_description="SEC302 Ethics in Cyber Security"),
     Courses(course_description="SEC304 Cryptography, Blockchain and Information Security")]
     db.session.bulk_save_objects(courselist)    
+    db.session.commit()    
+    stafflist=Staff(title="Mr",first_name="Admin",last_name="Admin",uname="Admin",password=generate_password_hash("Admin"),address="Address",email="email@email.com",phone="123456789",role="Admin",isapproved=True)
+    db.session.add(stafflist)
     db.session.commit()
 
 @app.route('/signup', methods = ['GET','POST'])
@@ -100,13 +103,16 @@ def signup():
         address = request.form.get("address")
         email = request.form.get("email")
         phone = request.form.get("phone")
-        role=request.form.get("role")        
+        role  =request.form.get("role")
+        print("ma yaha chu")
+        isapproved = False if role=="Admin" else True        
         #check if username already exists       
         account=Staff.query.filter_by(uname=uname).first()
         if account:
             flash('Username already exists','Danger')
+            return redirect(url_for("signin"))
         else:
-            data=Staff(title=title,first_name=fname,last_name=lname,uname=uname,password=_hashed_password,role=role,address=address,email=email,phone=phone)
+            data=Staff(title=title,first_name=fname,last_name=lname,uname=uname,password=_hashed_password,role=role,address=address,email=email,phone=phone,isapproved=isapproved)
             db.session.add(data)
             db.session.commit()
             flash('Userid created successfully','success')
@@ -130,7 +136,7 @@ def signin():
     if request.method == "POST":        
         uname = request.form.get("uname")
         password = request.form.get("password")            
-        user=Staff.query.filter(Staff.uname==uname).first()        
+        user=Staff.query.filter(Staff.uname==uname,Staff.isapproved==True).first()        
         if user is not None:
             print("password milyo")
             password_rs=user.password                    
@@ -411,6 +417,51 @@ def report(staff_id):
     print(mdata)
     return render_template('staff_report.html',mdata=mdata)
 
+@app.route('/staffman', methods = ['GET','POST'])
+@login_required
+def staffman():
+    return render_template('staff_man.html',mdata=mdata)
+
+@app.route('/disable/<int:staff_id>', methods = ['GET','POST'])
+@login_required
+def disable(staff_id):
+    staff=Staff.query.filter_by(staff_id=staff_id).first()        
+    staff.isapproved=False
+    db.session.commit()
+    flash("Data Updated Successfully",'success')
+    return redirect(url_for("staffman"))
+    
+
+@app.route('/enable/<int:staff_id>', methods = ['GET','POST'])
+@login_required
+def enable(staff_id):
+    staff=Staff.query.filter_by(staff_id=staff_id).first()        
+    staff.isapproved=True
+    db.session.commit()
+    flash("Data Updated Successfully",'success')
+    return redirect(url_for("staffman"))
+
+@app.route('/MakeTeacher/<int:staff_id>', methods = ['GET','POST'])
+@login_required
+def MakeTeacher(staff_id):
+    staff=Staff.query.filter_by(staff_id=staff_id).first()        
+    staff.role="Teacher"
+    db.session.commit()
+    flash("Data Updated Successfully",'success')
+    return redirect(url_for("staffman"))
+    
+
+@app.route('/MakeAdmin/<int:staff_id>', methods = ['GET','POST'])
+@login_required
+def MakeAdmin(staff_id):
+    staff=Staff.query.filter_by(staff_id=staff_id).first()        
+    staff.role="Admin"
+    db.session.commit()
+    flash("Data Updated Successfully",'success')
+    return redirect(url_for("staffman"))
+
+
+
 @app.route('/logout',methods = ['GET','POST'])
 @login_required
 def logout():
@@ -435,7 +486,8 @@ class Staff(db.Model,UserMixin):
     address=db.Column(db.String(255))
     email=db.Column(db.String(255))
     phone=db.Column(db.String(255))
-    role = db.Column(db.String(255)) 
+    role = db.Column(db.String(255))
+    isapproved=db.Column(db.Boolean,default=False) 
 
     def get_id(self):
            return (self.staff_id)
