@@ -420,6 +420,7 @@ def report(staff_id):
 @app.route('/staffman', methods = ['GET','POST'])
 @login_required
 def staffman():
+    mdata=Staff.query.order_by(Staff.staff_id).all()
     return render_template('staff_man.html',mdata=mdata)
 
 @app.route('/disable/<int:staff_id>', methods = ['GET','POST'])
