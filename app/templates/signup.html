@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}
+	Register - Teaching Management
+{% endblock %}
+{% block body %}
+  <div class="container">
+    {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category,message in messages %}
+            <div class='alert alert-{{category}}'>{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    <form action="/signup" method="POST">
+    </br>
+    <select name="title" id="title" class="form-control">
+      {% for t in tdata %}
+      <option value={{t.title}}>{{t.title}}</option>
+      {% endfor %}
+    </select>
+    </br>
+      <input class="form-control" type="text" name="fname" id="fname" placeholder="First Name" required>
+      </br>
+      <input class="form-control" type="text" name="lname" id="lname" placeholder="Last Name" required>
+    </br>
+    <input class="form-control" type="text" name="uname" id="uname" placeholder="UserName" required>
+    </br>
+    <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
+  </br>
+  <input class="form-control" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" required>
+</br>
+  <input class="form-control" type="text" id="address" name="address"  placeholder="Address" maxlength="50" required>
+</br>
+<input class="form-control" type="email" id="email" name="email" placeholder="Email Address" maxlength="50" required>
+</br>
+<input class="form-control" type="text" id="phone" name="phone"  placeholder="Phone Number" maxlength="50" required>
+</br>
+<input type="radio" id="role" name="role" value="Admin">
+ <label>Admin</label>
+ <input type="radio" id="role" name="role" value="Teacher">
+ <label>Teacher</label>
+</br>
+</br>
+<input type="submit" value="Create User" class="btn btn-primary">
+</br>
+</br>
+<p class='text-left'><a href='{{url_for("signin")}}' class='btn btn-warning'>Already Registered! Please Sigin.</a></p>
+  </form>
+  </div>
+{% endblock %}

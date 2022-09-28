@@ -1,0 +1,58 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">  
+  <table class="table-sm table table-striped">
+  <tr>      
+  <td class="text-left"><a href='{{url_for("gotodash")}}' class='btn btn-primary'>Go Back</a></td>
+    <td class="text-right">
+      
+  </td>
+</tr>
+</table>
+</div>
+<div class="container">
+<h5 class="text text-left text-info">User Details</h5>
+<table class="table table-striped">
+  <th>UserName</th><th>FirstName</th><th>LastName</th><th>Current Role</th><th>Current Status</th><th>Enable/Disable</th><th>New Role</th>
+{% for m in mdata %}
+<tr>
+  <td>
+    {{m.uname}}
+  </td>
+  <td>
+    {{m.first_name}}
+  </td>
+  <td>
+    {{m.last_name}}
+  </td>
+  <td>
+    {{m.role}}
+  </td>
+  <td>
+    {% if  m.isapproved==True %}
+    Enabled
+    {% else %}
+    Disabled
+    {% endif %} 
+  </td>
+    <td>
+    {% if  m.isapproved==True %}
+    <a href="/disable/{{m.staff_id}}">Disable</a>
+    {% else %}
+    <a href="/enable/{{m.staff_id}}">Enable</a>
+    {% endif %}    
+  </td>
+  <td>
+    {% if  m.role=="Admin" %}
+    <a href="/MakeTeacher/{{m.staff_id}}">ChangeToTeacher</a>
+    {% else %}
+    <a href="/MakeAdmin/{{m.staff_id}}">ChangeToAdmin</a>
+    {% endif %} 
+  </td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
+

@@ -1,0 +1,27 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">  
+  <table class="table-sm table table-striped">
+  <tr>      
+  <td class="text-left"><a href='{{url_for("gotodash")}}' class='btn btn-primary'>Go Back</a></td>
+    <td class="text-right">
+      <a href='{{url_for("logout")}}' class='btn btn-outline-danger'>{{ username }} logout</a>
+  </td>
+</tr>
+</table>
+</div>
+<div class="container">
+<h5 class="text text-left text-info">Personal Details</h5>
+{% for m in mdata %}
+<ul>
+  <li>Name: {{m[0].title}} {{m[0].first_name}} {{m[0].last_name}}</li>
+  <li>Address: {{m[0].address}}</li>
+  <li>Contact Email: {{m[0].email}} Phone: {{m[0].phone}}  </li>
+  <li>Qualification: {{m[2].levels}} </li> 
+</ul>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
+

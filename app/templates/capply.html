@@ -1,0 +1,70 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">  
+  <table class="table-sm table table-striped">
+  <tr>      
+  <td class="text-left"><a href='{{url_for("gotodash")}}' class='btn btn-primary'>Go Back</a></td>
+    <td class="text-right">
+      
+  </td>
+</tr>
+</table>
+</div>
+<div class="container">  
+      {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category,message in messages %}
+            <div class='alert alert-{{category}}'>{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+</div>
+  <div class="row">
+    <div class="col-sm">
+      <h5>Available Courses</h5>    
+    <table class="table table-striped"> 
+      <th>Semester</th><th>Courses</th><th>Action</th>
+    {% for ca in cadata %}
+    <tr>
+      <td>{{ca[2].semester_description}}</td>
+      <td>{{ca[1].course_description}}</td>
+      <td><form method="POST" action="/capply">
+        <input type="submit" value="Apply" class="btn1 btn btn-sm btn-primary">
+        <input type="hidden" name="ca_id" id="ca_id" value='{{ca[0].ca_id}}' >
+        <input type="hidden" name="status" id="status" value='Pending' >
+      </form></td>   
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+    <div class="col-sm">
+      <h5>Applied Courses</h5>
+      <table class="table table-striped"> 
+        {% if stcdata %}   
+        
+        <th>Semester</th><th>Course</th><th>Teacher</th><th>Status</th><th>Remarks</th><th>Authorisedby</th>
+      {% for sa in stcdata %}
+      <tr>       
+        <td>{{sa[3].semester_description}}</td>
+        <td>{{sa[2].course_description}}</td>
+        <td>{{sa[4].first_name}} {{sa[4].last_name}}</td>
+        <td>{{sa[0].status}}</td>
+        <td>{{sa[0].remarks}}</td>
+        <td>{{sa[0].authorisedby}}</td>
+      </tr>
+      {% endfor %}
+      {% endif %} 
+      </table>
+
+    </div>
+  </div>
+  <style>
+    .btn1{
+      width: 100px;
+    }
+  </style>
+
+
+{% endblock %}
+

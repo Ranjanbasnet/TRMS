@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">  
+  <table class="table-sm table table-striped">
+  <tr>      
+  <td class="text-left"><a href='{{url_for("gotodash")}}' class='btn btn-primary'>Go Back</a></td>
+    <td class="text-right">
+      
+  </td>
+</tr>
+</table>
+</div>
+<div class="container">  
+      {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category,message in messages %}
+            <div class='alert alert-{{category}}'>{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+  <div class="container"> 
+    <table class="table table-sm table-striped">
+      <form action="/sdetails" method="post">
+        <tr><td>
+        <input type="text" class="form-control" name="course_description" id="course_description" required>      
+      </td>
+      <td>
+      <input class="btn btn-primary" type="submit" value="Add Semesters">
+      </td>
+      </tr>
+      </form>
+      <tr>
+          <th>Semesters Description</th>          
+          <th>Actions</th>
+      </tr>
+      {% for d in data %}
+    <tr>
+    <td>{{d.semester_description}}</td>    
+    <td><a href="/edit_sdetails/{{d.semester_id}}">Edit</a></td>
+    </tr>
+      {% endfor %}
+    </table>    
+    </div>
+{% endblock %}
+

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>{% block title %} {% endblock %}</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}"> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+		<!-- External Links -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+
+    <link rel="stylesheet" href="{{url_for('static', filename = '/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = '/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = '/css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = '/css/responsive.css')}}">
+
+    <script src="{{url_for('static', filename = 'js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/custom.js')}}"></script>
+
+  </head>
+  <body>
+    <div class="hero_area">
+
+			<!-- header section strats -->
+			<header class="header_section">
+	      <div class="container-fluid">
+	        <nav class="navbar navbar-expand-lg custom_nav-container ">
+				<a class="navbar-brand" href="{{url_for("gotodash")}}">
+					<span>
+					Teaching Management 
+          {% if session['role'] %}
+          ( {{ session['uname'] }} )
+          {% endif%}
+					</span>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class=""> </span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+					<ul class="navbar-nav">
+						<li class="nav-item active">
+						<a class="nav-link" href="{{url_for("gotodash")}}">Home <span class="sr-only">(current)</span></a>
+						</li>						
+            {% if not session['role'] %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for("signup")}}">Register</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for("signin")}}">Signin</a>
+              </li>
+          {% endif%}          
+          {% if session['role'] %}
+          	<li class="nav-item">
+						<a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+						</li>
+            {% endif %}
+					</ul>
+					</div>
+				</div>
+				</nav>
+			</header>
+
+      {% block body %}
+      {% endblock %}
+  </body>
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 footer-col">
+          <div class="footer_detail">
+            <h4>
+              About
+            </h4>
+            <p>
+              Teaching Management is the all in one management solution for teacher management and others
+            </p>
+            <div class="footer_social">
+              <a href="https://facebook.com/">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="https://twitter.com/">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.linkedin.com/">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="http://instagram.com/">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Reach at..
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer-col">
+          <h4>
+            Important Links
+          </h4>
+          <div class="info_links_menu">
+            <ul>
+              <li><a class="" href="{{url_for('signin')}}">Home <span class="sr-only">(current)</span></a></li>
+              <li><a class="" href="{{url_for('contact')}}">Contact Us</a></li>
+              <li><a class="" href="{{url_for('privacy')}}">Privacy Policy</a></li>
+              <li><a class="" href="{{url_for('terms')}}">Terms & Condition</a></li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="#">Team Teaching Developers</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  			</div>
+</html>
