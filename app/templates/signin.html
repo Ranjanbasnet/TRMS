@@ -1,5 +1,7 @@
-
 {% extends 'layout.html' %}
+{% block title %}
+	Sign In - Teaching Management
+{% endblock %}
 {% block body %}
   <div class="container">
     {% with messages=get_flashed_messages(with_categories=true) %}
@@ -9,18 +11,17 @@
           {% endfor %}
         {% endif %}
       {% endwith %}
-    <form action="/signin" method="POST">   
+    <form action="/signin" method="POST">
       <label>Username:</label>
     <input class="form-control" type="text" name="uname" id="uname" required placeholder="UserName:" autocomplete="false">
     </br>
-    <label>Password:</label>    
+    <label>Password:</label>
     <input class="form-control" type="password" name="password" id="password" required placeholder="Password:" autocomplete="false">
-  </br>  
+  </br>
     <input type="submit" value="Login" class="btn btn-primary">
 </br>
 </br>
-<p class='text-left'><a href='{{url_for("signup")}}' class='btn btn-warning '>New User! Please Signup Here.</a></p>  
-  </form>  
-  </div>  
+<p class='text-left'><a href='{{url_for("signup")}}' class='btn btn-warning '>New User! Please Signup Here.</a></p>
+  </form>
+  </div>
 {% endblock %}
-
