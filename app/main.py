@@ -13,9 +13,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 import random
 
-#from flask_session import Session
-#import requests
-
 app=Flask(__name__)
 ENV='prod'
 
@@ -36,10 +33,6 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 db = SQLAlchemy(app)
-
-# # Set up database
-# engine = create_engine("postgresql://ngphbicnonovun:97468d85c168eb91ebc17c6d468d73476bfbc699ed5f7c2dda18ab176f521049@ec2-3-224-184-9.compute-1.amazonaws.com:5432/dfn3d2la3ofkld")
-# db1 = scoped_session(sessionmaker(bind=engine))
 
 def populate_db():
     titlelist = [Title(title="Mr"),Title(title="Mrs"),Title(title="Miss")]
