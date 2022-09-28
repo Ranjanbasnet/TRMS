@@ -917,4 +917,8 @@ a:focus {
 .btngp{
   width: 300px;
 }
+
+*{
+  font-size: small;
+}
 /*# sourceMappingURL=style.css.map */
