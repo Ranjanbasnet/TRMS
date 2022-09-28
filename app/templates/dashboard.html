@@ -3,6 +3,17 @@
 	Dashboard - Teaching Management
 {% endblock %}
 {% block body %}
+<<<<<<< HEAD
+=======
+  <table class="table-sm table table-striped">
+    <tr>
+      <td class="text-left text-info"><h5>{{ session['uname'] }} Logged in as {{ session['role'] }}  </h5></td>
+    <td class="text-right">
+      <a href='{{url_for("logout")}}' class='btn btn-danger'>Logout</a>
+  </td>
+</tr>
+</table>
+>>>>>>> 62154e80a17f57887b7a46c7cc6d9867ae5de1dd
 <table class="table-sm table table-striped text-center">
   <tr>
 <td><a href='{{url_for("mdetails")}}' class='btn btn-info btn-lg btngp'>View My Details</a></td>
@@ -10,6 +21,7 @@
 </tr>
 {% if session['role']=='Admin' %}
 <tr>
+<<<<<<< HEAD
 <td><a href='{{url_for("cdetails")}}' class='btn btn-info btn-lg btngp'>View Available Courses</a></td>
 <td><a href='{{url_for("sdetails")}}' class='btn btn-info btn-lg btngp'>View Available Semesters</a></td>
 </tr>
@@ -19,6 +31,17 @@
   </tr>
   <tr>
       <td><a href='{{url_for("staffman")}}' class='btn btn-info btn-lg btngp'>Staff Management</a></td>
+=======
+<td><a href='{{url_for("cdetails")}}' class='btn btn-info btn-lg'>View Available Courses</a></td>
+<td><a href='{{url_for("sdetails")}}' class='btn btn-info btn-lg'>View Available Semesters</a></td>
+</tr>
+<tr>
+  <td><a href='{{url_for("calloc")}}' class='btn btn-info btn-lg'>Course Allocation</a></td>
+  <td><a href='{{url_for("reqman")}}' class='btn btn-info btn-lg'>Request Management</a></td>
+  </tr>
+  <tr>
+      <td><a href='{{url_for("staffman")}}' class='btn btn-info btn-lg'>Staff Management</a></td>
+>>>>>>> 62154e80a17f57887b7a46c7cc6d9867ae5de1dd
     <td></td>
   </tr>
 {% endif %}
